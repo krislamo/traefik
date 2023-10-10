@@ -1,0 +1,41 @@
+version: '3.8'
+
+volumes:
+  traefik:
+
+networks:
+  traefik:
+    name: traefik
+
+services:
+  traefik:
+    image: "${IMAGE:-traefik}:${VERSION:-latest}"
+    container_name: "${NAME:-traefik}"
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=${EXPOSED_BY_DEFAULT:-false}
+      - --api.dashboard=${DASHBOARD:-true}
+      - --api.debug=${DEBUG:-false}
+      - --log.level=${LOG_LEVEL:-ERROR}
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.local.address=:8443
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.web.http.redirections.entrypoint.permanent=true
+    ports:
+      - "${WEB_PORT:-0.0.0.0:80:80}"
+      - "${WEBSECURE_PORT:-0.0.0.0:443:443}"
+      - "${LOCAL_PORT:-127.0.0.1:8443:8443}"
+    labels:
+      traefik.http.routers.traefik.rule: Host(`${DOMAIN:-traefik.local.krislamo.org}`)
+      traefik.http.routers.traefik.service: api@internal
+      traefik.http.routers.traefik.entrypoints: ${ENTRYPOINT:-local}
+      traefik.http.routers.traefik.tls: true
+      traefik.docker.network: ${NETWORK:-traefik}
+      traefik.enable: ${ENABLE:-false}
+    networks:
+      - traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - "traefik:/etc/traefik"
