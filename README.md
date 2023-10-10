@@ -39,7 +39,6 @@ Here's a brief explanation of the variables used in the docker-compose files:
 
 ### Traefik Settings
 - `DASHBOARD`: Enable(=true) or disable(=false) the Traefik API dashboard (default: `true`).
-- `ROUTER`: Traefik's personal router name used in labels (default: `traefik`).
 - `DOMAIN`: The domain name where Traefik's dashboard is accessible (default: `traefik.local.krislamo.org`).
 - `ENTRYPOINT`: The entry point for the dashboard (default: `local`).
 - `EXPOSED_BY_DEFAULT`: Expose Docker containers by default without needing specific labels (default: `false`).
