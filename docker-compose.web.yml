@@ -1,0 +1,33 @@
+version: '3.8'
+
+volumes:
+  traefik:
+
+networks:
+  traefik:
+    name: traefik
+
+services:
+  traefik:
+    image: "${IMAGE:-traefik}:${VERSION:-latest}"
+    container_name: "${NAME:-traefik}"
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=${EXPOSED_BY_DEFAULT:-false}
+      - --api.dashboard=${DASHBOARD:-true}
+      - --api.debug=${DEBUG:-false}
+      - --log.level=${LOG_LEVEL:-ERROR}
+      - --entrypoints.web.address=:80
+    ports:
+      - "${WEB_PORT:-127.0.0.1:80:80}"
+    labels:
+      - "traefik.http.routers.${ROUTER:-traefik}.rule=Host(`${DOMAIN:-traefik.local.krislamo.org}`)"
+      - "traefik.http.routers.${ROUTER:-traefik}.service=api@internal"
+      - "traefik.http.routers.${ROUTER:-traefik}.entrypoints=${ENTRYPOINT:-web}"
+      - "traefik.docker.network=${NETWORK:-traefik}"
+      - "traefik.enable=${ENABLE:-false}"
+    networks:
+      - traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - "traefik:/etc/traefik"
