@@ -31,7 +31,7 @@ services:
       - "traefik.http.routers.${ROUTER:-traefik}.rule=Host(`${DOMAIN:-traefik.local.krislamo.org}`)"
       - "traefik.http.routers.${ROUTER:-traefik}.service=api@internal"
       - "traefik.http.routers.${ROUTER:-traefik}.entrypoints=${ENTRYPOINT:-local}"
-      - "traefik.http.routers.${ROUTER:-traefik}.tls=true"
+      - "traefik.http.routers.${ROUTER:-traefik}.tls=${ENABLE_TLS:-true}"
       - "traefik.docker.network=${NETWORK:-traefik}"
       - "traefik.enable=${ENABLE:-false}"
     networks:
