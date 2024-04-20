@@ -38,19 +38,18 @@ Here's a brief explanation of the variables used in the docker-compose files:
 - `NAME`: The name assigned to the created container (default: `traefik`).
 
 ### Traefik Settings
-- `DASHBOARD`: Enable(=true) or disable(=false) the Traefik API dashboard (default: `true`).
+- `DASHBOARD`: Enable(=true) or disable(=false) the Traefik API dashboard (default: `false`).
 - `DOMAIN`: The domain name where Traefik's dashboard is accessible (default: `traefik.local.krislamo.org`).
 - `ENTRYPOINT`: The entry point for the dashboard (default: `local`).
 - `EXPOSED_BY_DEFAULT`: Expose Docker containers by default without needing specific labels (default: `false`).
 
 ### Network Settings
 - `NETWORK`: The Docker network to be used (default: `traefik`).
-- `WEB_PORT`: Binding for the regular HTTP traffic (default: `0.0.0.0:80:80`).
-- `WEBSECURE_PORT`: Binding for HTTPS traffic (default: `0.0.0.0:443:443`).
+- `WEB_PORT`: Binding for the regular HTTP traffic (defaults vary).
+- `WEBSECURE_PORT`: Binding for HTTPS traffic (default: `0.0.0.0:443:443`, only on HTTPS version).
 - `LOCAL_PORT`: Binding for local HTTPS traffic (default: `127.0.0.1:8443:8443`).
 
 ### Other Settings
-- `ENABLE`: Enable(=true) or disable(=false) Traefik to expose its API and dashboard (default: `false`).
 - `LOG_LEVEL`: Logging level (default: `ERROR`).
 - `DEBUG`: Enable(=true) or turn off(=false) API debugging (default: `false`).
 

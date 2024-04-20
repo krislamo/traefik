@@ -14,7 +14,7 @@ services:
     command:
       - --providers.docker=true
       - --providers.docker.exposedbydefault=${EXPOSED_BY_DEFAULT:-false}
-      - --api.dashboard=${DASHBOARD:-true}
+      - --api.dashboard=${DASHBOARD:-false}
       - --api.debug=${DEBUG:-false}
       - --log.level=${LOG_LEVEL:-ERROR}
       - --entrypoints.web.address=:80
@@ -31,9 +31,9 @@ services:
       - "traefik.http.routers.${ROUTER:-traefik}.rule=Host(`${DOMAIN:-traefik.local.krislamo.org}`)"
       - "traefik.http.routers.${ROUTER:-traefik}.service=api@internal"
       - "traefik.http.routers.${ROUTER:-traefik}.entrypoints=${ENTRYPOINT:-local}"
-      - "traefik.http.routers.${ROUTER:-traefik}.tls=${ENABLE_TLS:-true}"
+      - "traefik.http.routers.${ROUTER:-traefik}.tls=${DASHBOARD_TLS:-true}"
       - "traefik.docker.network=${NETWORK:-traefik}"
-      - "traefik.enable=${ENABLE:-false}"
+      - "traefik.enable=${DASHBOARD:-false}"
     networks:
       - traefik
     volumes:
