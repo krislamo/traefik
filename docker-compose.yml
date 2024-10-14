@@ -7,7 +7,7 @@ networks:
 
 services:
   traefik:
-    image: "${IMAGE:-traefik}:${VERSION:-latest}"
+    image: "${IMAGE:-traefik}:${VERSION:?}"
     container_name: "${NAME:-traefik}"
     command:
       - --providers.docker=true
