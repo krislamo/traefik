@@ -30,5 +30,5 @@ services:
     networks:
       - traefik
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ${SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
       - "traefik:/etc/traefik"
